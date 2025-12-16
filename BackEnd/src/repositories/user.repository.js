@@ -2,6 +2,19 @@ import { Users } from "./../models/entities/user.entity.js";
 import { UserModel } from "./../models/user.model.js";
 
 export class UserRepository {
+	async getUser(username) {
+		const data = await Users.findOne({
+			username: username,
+		});
+		return new UserModel(
+			data.name,
+			data.surname,
+			data.email,
+			data.username,
+			data.password
+		);
+	}
+
 	async createUser(data) {
 		const results = await Users.findOne({
 			username: data.username,
@@ -20,16 +33,13 @@ export class UserRepository {
 		}
 	}
 
-	async getUser(username) {
-		const data = await Users.findOne({
-			username: username,
+	async removeUser(id) {
+		const results = await Users.findOne({
+			username: id,
 		});
-		return new UserModel(
-			data.name,
-			data.surname,
-			data.email,
-			data.username,
-			data.password
-		);
+		if (results) {
+			await Users.deleteOne({ username: id });
+			return true;
+		}
 	}
 }

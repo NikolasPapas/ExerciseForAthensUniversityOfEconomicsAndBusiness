@@ -35,7 +35,7 @@ router.get("/", authenticate, async (req, res, next) => {
 	}
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", authenticate, async (req, res, next) => {
 	try {
 		const insurance = await insuranceService.createInsurance(req.body);
 		res.status(201).json(insurance);

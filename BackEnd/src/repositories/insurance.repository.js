@@ -2,7 +2,6 @@ import { Insurances } from "./../models/entities/Insurance.entity.js";
 import { InsuranceModel } from "./../models/insurance.model.js";
 
 export class InsuranceRepository {
-
 	async getInsurance(request) {
 		const dbRequest = {};
 		if (request.insuranceId) dbRequest.insuranceId = request.insuranceId;
@@ -21,26 +20,6 @@ export class InsuranceRepository {
 					resultData.price
 				)
 		);
-	}
-
-	async createInsurance(data) {
-		const results = await Insurances.findOne({
-			insuranceId: data.insuranceId,
-			ownerTaxId: data.ownerTaxId,
-			plateNumber: data.plateNumber
-		});
-		if (!results) {
-			await Insurances.create({
-				insuranceId: data.insuranceId,
-				ownerTaxId: data.ownerTaxId,
-				plateNumber: data.plateNumber,
-				expiryDate: data.expiryDate,
-				price: data.price,
-				createDate: new Date(),
-				updateDate: new Date(),
-			})
-			return data;
-		}
 	}
 
 	async getInsurancesById(insuranceId) {
@@ -75,5 +54,35 @@ export class InsuranceRepository {
 					item.price
 				)
 		);
+	}
+
+	async createInsurance(data) {
+		const results = await Insurances.findOne({
+			insuranceId: data.insuranceId,
+			ownerTaxId: data.ownerTaxId,
+			plateNumber: data.plateNumber,
+		});
+		if (!results) {
+			await Insurances.create({
+				insuranceId: data.insuranceId,
+				ownerTaxId: data.ownerTaxId,
+				plateNumber: data.plateNumber,
+				expiryDate: data.expiryDate,
+				price: data.price,
+				createDate: new Date(),
+				updateDate: new Date(),
+			});
+			return data;
+		}
+	}
+
+	async removeInsurance(id) {
+		const results = await Insurances.findOne({
+			insuranceId: id,
+		});
+		if (results) {
+			await Insurances.deleteOne({ insuranceId: id });
+			return true;
+		}
 	}
 }

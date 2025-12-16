@@ -2,7 +2,6 @@ import { Vehicles } from "../models/entities/vehicle.entity.js";
 import { VehicleModel } from "../models/vehicle.model.js";
 
 export class VehicleRepository {
-
 	async getVehicle(request) {
 		const dbRequest = {};
 		if (request.plateNumber) dbRequest.plateNumber = request.plateNumber;
@@ -25,6 +24,23 @@ export class VehicleRepository {
 		);
 	}
 
+	async getVehiclesByPlate(plateNumber) {
+		const data = await Vehicles.find({
+			plateNumber: plateNumber,
+		});
+
+		return data.map(
+			(resultData) =>
+				new VehicleModel(
+					resultData.plateNumber,
+					resultData.insuranceDate,
+					resultData.ownerTaxId,
+					resultData.brand,
+					resultData.model,
+					resultData.color
+				)
+		);
+	}
 
 	async createVehicle(data) {
 		const results = await Vehicles.findOne({
@@ -46,21 +62,13 @@ export class VehicleRepository {
 		}
 	}
 
-	async getVehiclesByPlate(plateNumber) {
-		const data = await Vehicles.find({
-			plateNumber: plateNumber,
+	async removeVehicle(id) {
+		const results = await Vehicles.findOne({
+			plateNumber: id,
 		});
-
-		return data.map(
-			(resultData) =>
-				new VehicleModel(
-					resultData.plateNumber,
-					resultData.insuranceDate,
-					resultData.ownerTaxId,
-					resultData.brand,
-					resultData.model,
-					resultData.color
-				)
-		);
+		if (results) {
+			await Vehicles.deleteOne({ plateNumber: id });
+			return true;
+		}
 	}
 }

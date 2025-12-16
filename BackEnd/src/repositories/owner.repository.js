@@ -2,25 +2,6 @@ import { Owners } from "./../models/entities/owner.entity.js";
 import { OwnerModel } from "./../models/owner.model.js";
 
 export class OwnerRepository {
-	async createOwner(ownerData) {
-		const results = await Owners.findOne({
-			ownerTaxId: ownerData.ownerTaxId,
-		});
-		if (!results) {
-			await Owners.create({
-				ownerTaxId: ownerData.ownerTaxId,
-				name: ownerData.name,
-				surname: ownerData.surname,
-				email: ownerData.email,
-				username: ownerData.username,
-				password: ownerData.password,
-				createDate: new Date(),
-				updateDate: new Date(),
-			});
-			return ownerData;
-		}
-	}
-
 	async getOwnersByTaxId(ownerTaxId) {
 		const data = await Owners.findOne({
 			ownerTaxId: ownerTaxId,
@@ -52,5 +33,34 @@ export class OwnerRepository {
 					item.gender
 				)
 		);
+	}
+	async createOwner(ownerData) {
+		const results = await Owners.findOne({
+			ownerTaxId: ownerData.ownerTaxId,
+		});
+		if (!results) {
+			await Owners.create({
+				ownerTaxId: ownerData.ownerTaxId,
+				name: ownerData.name,
+				surname: ownerData.surname,
+				email: ownerData.email,
+				username: ownerData.username,
+				password: ownerData.password,
+				createDate: new Date(),
+				updateDate: new Date(),
+			});
+			return ownerData;
+		}
+	}
+
+	async removeOwner(id) {
+		const results = await Owners.findOne({
+			ownerTaxId: id,
+		});
+		if (results) {
+			console.log("Remove owner results:", results);
+			await Owners.deleteOne({ ownerTaxId: id });
+			return true;
+		}
 	}
 }

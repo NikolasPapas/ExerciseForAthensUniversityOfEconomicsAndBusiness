@@ -35,7 +35,7 @@ router.get("/", authenticate, async (req, res, next) => {
 	}
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", authenticate,async (req, res, next) => {
 	try {
 		const owner = await ownerService.createOwner(req.body);
 		res.status(201).json(owner);
@@ -62,8 +62,8 @@ router.delete(
 	authenticate,
 	async (req, res, next) => {
 		try {
-			await ownerService.removeOwner(req.params.id);
-			res.status(201).json(true);
+			console.log("Deleting owner with id:", req.params.id);
+			res.status(201).json(await ownerService.removeOwner(req.params.id));
 		} catch (err) {
 			next(err);
 		}
