@@ -6,13 +6,16 @@ export class UserRepository {
 		const data = await Users.findOne({
 			username: username,
 		});
-		return new UserModel(
-			data.name,
-			data.surname,
-			data.email,
-			data.username,
-			data.password
-		);
+		if (data) {
+			return new UserModel(
+				data.name,
+				data.surname,
+				data.email,
+				data.username,
+				data.password
+			);
+		}
+		return null;
 	}
 
 	async createUser(data) {

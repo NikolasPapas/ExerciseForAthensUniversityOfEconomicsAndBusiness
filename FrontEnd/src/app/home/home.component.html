@@ -1,13 +1,29 @@
 <mat-card class="row card centered">
 	<mat-card-header class="col-12 card-header centered">
 		<mat-card-title>
-			tittle
+			ExerciseForAthensUniversityOfEconomicsAndBusiness
 		</mat-card-title>
-		<mat-card-subtitle>
-			subTitle
-		</mat-card-subtitle>
+		<mat-card-subtitle> Mechanic Shop </mat-card-subtitle>
 	</mat-card-header>
 	<mat-card-content class="col-12 row card-content container centered">
-	data
+		<form class="row col-12 centered" [formGroup]="loginCredentials">
+			<mat-form-field class="col-auto">
+				<input
+					matInput
+					type="text"
+					placeholder="username"
+					formControlName="username"
+				/>
+			</mat-form-field>
+			<mat-form-field class="col-auto">
+				<input
+					matInput
+					type="password"
+					placeholder="password"
+					formControlName="password"
+				/>
+			</mat-form-field>
+			<button matButton (click)="login(loginCredentials.getRawValue())">Login</button>
+		</form>
 	</mat-card-content>
 </mat-card>

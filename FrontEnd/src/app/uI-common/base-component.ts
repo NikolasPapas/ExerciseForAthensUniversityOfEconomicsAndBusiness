@@ -11,10 +11,8 @@ export abstract class BaseComponent {
 
     if (!control) return false;
 
-    // Αν θέλω συγκεκριμένο validation error
     if (errorType) return control.hasError(errorType) && (control.dirty || control.touched);
 
-    // Αν θέλω απλά να ξέρω ότι υπάρχει οποιοδήποτε error
     return control.invalid && (control.dirty || control.touched);
   }
 

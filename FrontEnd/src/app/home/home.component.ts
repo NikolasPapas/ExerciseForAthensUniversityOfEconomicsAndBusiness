@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BaseComponent } from '../uI-common/base-component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   standalone: false,
@@ -7,10 +10,28 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-  gameId: string | null = null;
+export class HomeComponent extends BaseComponent implements OnInit {
+  loginCredentials: FormGroup = null;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) {
+    super();
+    this.http.get(`${this.API_URL}/health`, {}).subscribe((res: any) => {
+    });
+  }
+
+  ngOnInit(): void {
+    this.loginCredentials = new FormGroup({
+      username: new FormControl("", [Validators.required]),
+      password: new FormControl("", [Validators.required]),
+    });
+  }
+
+  login(data: any) {
+    console.log(data);
+    this.http.post(`${this.API_URL}/api/auth`, { username: data.username, password: data.password }).subscribe((res: any) => {
+      localStorage.setItem('access_token', res.token);
+    });
+  }
 
 
 }

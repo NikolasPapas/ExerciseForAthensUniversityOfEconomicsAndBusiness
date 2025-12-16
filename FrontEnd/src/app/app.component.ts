@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -13,6 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent {
   constructor() {
+    localStorage.setItem('appBaseUrl', environment.API_URL || 'http://localhost:4000');
   }
 
 

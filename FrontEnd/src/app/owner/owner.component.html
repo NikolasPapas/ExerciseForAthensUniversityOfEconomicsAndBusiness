@@ -1,0 +1,51 @@
+<div>
+	@for(owner of owners.controls; track owner.get('ownerTaxId').value){
+	<section class="row col-12 centered" [formGroup]="$any(owner)">
+		<mat-card class="row col-12 centered">
+			<mat-card-content class="row col-12 centered">
+				<mat-form-field class="col-auto">
+					<input
+						matInput
+						type="text"
+						placeholder="ownerTaxId"
+						formControlName="ownerTaxId"
+					/>
+				</mat-form-field>
+
+				<mat-form-field class="col-auto">
+					<input
+						matInput
+						type="text"
+						placeholder="name"
+						formControlName="name"
+					/>
+				</mat-form-field>
+				<mat-form-field class="col-auto">
+					<input
+						matInput
+						type="text"
+						placeholder="surname"
+						formControlName="surname"
+					/>
+				</mat-form-field>
+				<mat-form-field class="col-auto">
+					<input
+						matInput
+						type="number"
+						placeholder="age"
+						formControlName="age"
+					/>
+				</mat-form-field>
+				<mat-form-field class="col-auto">
+					<input
+						matInput
+						type="text"
+						placeholder="gender"
+						formControlName="gender"
+					/>
+				</mat-form-field>
+			</mat-card-content>
+		</mat-card>
+	</section>
+	}
+</div>
