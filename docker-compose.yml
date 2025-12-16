@@ -1,0 +1,79 @@
+services:
+
+  mongodb:
+    build: ./DB/mongo
+    container_name: mongo-db
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: applicationDB
+    # volumes:
+    #   - mongo_data:/data/db
+
+  mongo-db-express:
+    image: mongo-express:1.0.2-20
+    container_name: mongo-db-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin123
+      ME_CONFIG_MONGODB_AUTH_DATABASE: admin
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin123
+      ME_CONFIG_OPTIONS_EDITORTHEME: default
+    depends_on:
+      - mongodb
+
+  backend:
+    build:
+      context: ./BackEnd
+      dockerfile: Dockerfile
+    volumes:
+      - ./BackEnd:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4000:4000"
+    command: npm run dev
+    env_file:
+      - ./BackEnd/dev.env
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - mongodb
+      # - redis
+
+  frontend:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile
+    volumes:
+      - ./FrontEnd:/app
+      - /app/node_modules
+    ports:
+      - "4200:4200"
+    command: npm start
+    environment:
+      - API_URL=http://localhost:4000
+      - UI_URL=http://localhost:4200
+    depends_on:
+      - backend
+
+
+  # db-importer:
+  #   build: ./DB/importer
+  #   container_name: db-importer
+  #   depends_on:
+  #     - mongodb
+  #   environment:
+  #     MONGO_URI: mongodb://admin:admin123@mongodb:27017/applicationDB?authSource=admin
+  #   restart: "no"
+
+# volumes:
+#   mongo_data:

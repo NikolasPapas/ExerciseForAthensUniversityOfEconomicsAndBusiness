@@ -1,0 +1,42 @@
+import { Users } from "./../models/entities/user.entity.js";
+import { UserModel } from "./../models/user.model.js";
+
+export class UserRepository {
+	async createUser(data) {
+		const results = await Users.findOne({
+			username: data.username,
+		});
+		if (!results) {
+			await Users.create({
+				name: data.name,
+				surname: data.surname,
+				email: data.email,
+				username: data.username,
+				password: data.password,
+				createDate: new Date(),
+				updateDate: new Date(),
+			}).then((resultData) => {
+				return new UserModel(
+					resultData.name,
+					resultData.surname,
+					resultData.email,
+					resultData.username,
+					resultData.password
+				);
+			});
+		}
+	}
+
+	async getUser(username) {
+		const data = await Users.findOne({
+			username: username,
+		});
+		return new UserModel(
+			data.name,
+			data.surname,
+			data.email,
+			data.username,
+			data.password
+		);
+	}
+}

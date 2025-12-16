@@ -1,0 +1,64 @@
+import { Owners } from "./../models/entities/owner.entity.js";
+import { OwnerModel } from "./../models/owner.model.js";
+
+export class OwnerRepository {
+
+	async createOwner(ownerData) {
+		const results = await Owners.findOne({
+			ownerTaxId: ownerData.ownerTaxId
+		});
+		if (!results) {
+			await Owners.create({
+				ownerTaxId: ownerData.ownerTaxId,
+				name: ownerData.name,
+				surname: ownerData.surname,
+				email: ownerData.email,
+				username: ownerData.username,
+				password: ownerData.password,
+				createDate: new Date(),
+				updateDate: new Date(),
+			}).then((data) => {
+				return new OwnerModel(
+					data.name,
+					data.surname,
+					data.email,
+					data.username,
+					data.password
+				);
+			});
+		}
+	}
+
+	async getOwnersByTaxId(ownerTaxId) {
+		const data = await Owners.findOne({
+			ownerTaxId: ownerTaxId,
+		});
+		return new OwnerModel(
+			data.ownerTaxId,
+			data.name,
+			data.surname,
+			data.age,
+			data.gender
+		);
+	}
+
+	async getOwner(request) {
+		const dbRequest = {};
+		if (request.ownerTaxId) dbRequest.ownerTaxId = request.ownerTaxId;
+		if (request.name) dbRequest.name = request.name;
+		if (request.surname) dbRequest.surname = request.surname;
+		if (request.age) dbRequest.age = request.age;
+		if (request.gender) dbRequest.gender = request.gender;
+		const data = await Owners.find(dbRequest);
+		return data.map(
+			(item) =>
+				new OwnerModel(
+					item.ownerTaxId,
+					item.name,
+					item.surname,
+					item.age,
+					item.gender
+				)
+		);
+	}
+}
