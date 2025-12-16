@@ -1,8 +1,9 @@
 export class InsuranceModel {
-	constructor(insuranceId, expiryDate, ownerTaxId, price) {
+	constructor(insuranceId, ownerTaxId, plateNumber, expiryDate, price) {
 		this.insuranceId = insuranceId;
-		this.expiryDate = expiryDate;
 		this.ownerTaxId = ownerTaxId;
+		this.plateNumber = plateNumber;
+		this.expiryDate = expiryDate;
 		this.price = price;
 	}
 }

@@ -63,14 +63,16 @@ export class InitialService {
 		// Insurance
 		await insuranceRepository.createInsurance({
 			insuranceId: "insurance001",
-			expiryDate: new Date().addDays(365),
+			plateNumber: "plate001",
 			ownerTaxId: "taxId001",
+			expiryDate: new Date().addDays(365),
 			price: 150,
 		});
 		await insuranceRepository.createInsurance({
 			insuranceId: "insurance002",
-			expiryDate: new Date().addDays(60),
+			plateNumber: "plate002",
 			ownerTaxId: "taxId002",
+			expiryDate: new Date().addDays(60),
 			price: 100,
 		});
 		return true;
