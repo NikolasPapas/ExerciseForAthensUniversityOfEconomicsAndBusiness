@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { OwnerService } from "./../services/owner.service.js";
+import { VehicleService } from "../services/vehicle.service.js";
 
 dotenv.config();
 
@@ -10,7 +10,7 @@ const JWT_SECRET =
 
 const router = express.Router();
 
-const ownerService = new OwnerService();
+const vehicleService = new VehicleService();
 
 export const authenticate = (req, res, next) => {
 	const header = req.headers.authorization;
@@ -28,8 +28,8 @@ export const authenticate = (req, res, next) => {
 
 router.get("/", authenticate, async (req, res, next) => {
 	try {
-		const owners = await ownerService.getOwners(req.body);
-		res.status(201).json(owners);
+		const vehicles = await vehicleService.getVehicles(req.body);
+		res.status(201).json(vehicles);
 	} catch (err) {
 		next(err);
 	}
@@ -37,8 +37,8 @@ router.get("/", authenticate, async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
 	try {
-		const owner = await ownerService.createOwner(req.body);
-		res.status(201).json(owner);
+		const vehicle = await vehicleService.createVehicle(req.body);
+		res.status(201).json(vehicle);
 	} catch (err) {
 		next(err);
 	}
@@ -49,8 +49,8 @@ router.get(
 	authenticate,
 	async (req, res, next) => {
 		try {
-			const owner = await ownerService.getOwnerById(req.params.id);
-			res.status(201).json(owner);
+			const vehicle = await vehicleService.getVehicleById(req.params.id);
+			res.status(201).json(vehicle);
 		} catch (err) {
 			next(err);
 		}
@@ -62,7 +62,7 @@ router.delete(
 	authenticate,
 	async (req, res, next) => {
 		try {
-			await ownerService.removeOwner(req.params.id);
+			await vehicleService.removeVehicle(req.params.id);
 			res.status(201).json(true);
 		} catch (err) {
 			next(err);

@@ -15,15 +15,8 @@ export class UserRepository {
 				password: data.password,
 				createDate: new Date(),
 				updateDate: new Date(),
-			}).then((resultData) => {
-				return new UserModel(
-					resultData.name,
-					resultData.surname,
-					resultData.email,
-					resultData.username,
-					resultData.password
-				);
 			});
+			return data;
 		}
 	}
 

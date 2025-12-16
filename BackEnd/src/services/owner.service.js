@@ -7,11 +7,15 @@ export class OwnerService {
 		return await ownerRepository.getOwner(request);
 	}
 
-	async getOwnerById(request) {}
+	async getOwnerById(request) {
+		return await ownerRepository.getOwnersByTaxId(request);
+	}
 
 	async createOwner(request) {
 		return await ownerRepository.createOwner(request);
 	}
 
-	async removeOwner(request) {}
+	async removeOwner(request) {
+		//TODO: Implement remove owner logic
+	}
 }

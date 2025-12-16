@@ -2,10 +2,9 @@ import { Owners } from "./../models/entities/owner.entity.js";
 import { OwnerModel } from "./../models/owner.model.js";
 
 export class OwnerRepository {
-
 	async createOwner(ownerData) {
 		const results = await Owners.findOne({
-			ownerTaxId: ownerData.ownerTaxId
+			ownerTaxId: ownerData.ownerTaxId,
 		});
 		if (!results) {
 			await Owners.create({
@@ -17,15 +16,8 @@ export class OwnerRepository {
 				password: ownerData.password,
 				createDate: new Date(),
 				updateDate: new Date(),
-			}).then((data) => {
-				return new OwnerModel(
-					data.name,
-					data.surname,
-					data.email,
-					data.username,
-					data.password
-				);
 			});
+			return ownerData;
 		}
 	}
 
