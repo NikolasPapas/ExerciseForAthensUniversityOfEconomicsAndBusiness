@@ -62,6 +62,38 @@ export class VehicleRepository {
 		}
 	}
 
+	async editVehicle(vehicleData) {
+		const results = await Vehicles.findOne({
+			plateNumber: vehicleData.plateNumber,
+		});
+		if (results) {
+			await Vehicles.updateOne(
+				{ plateNumber: vehicleData.plateNumber },
+				{
+					insuranceDate: vehicleData.insuranceDate,
+					ownerTaxId: vehicleData.ownerTaxId,
+					brand: vehicleData.brand,
+					model: vehicleData.model,
+					color: vehicleData.color,
+					updateDate: new Date(),
+				}
+			);
+			return vehicleData;
+		}else{
+			await Vehicles.create({
+				plateNumber: vehicleData.plateNumber,
+				insuranceDate: vehicleData.insuranceDate,
+				ownerTaxId: vehicleData.ownerTaxId,
+				brand: vehicleData.brand,
+				model: vehicleData.model,
+				color: vehicleData.color,
+				createDate: new Date(),
+				updateDate: new Date(),
+			});
+			return vehicleData;
+		}
+	}
+
 	async removeVehicle(id) {
 		const results = await Vehicles.findOne({
 			plateNumber: id,

@@ -37,6 +37,7 @@ export class OwnerRepository {
 				)
 		);
 	}
+
 	async createOwner(ownerData) {
 		const results = await Owners.findOne({
 			ownerTaxId: ownerData.ownerTaxId,
@@ -55,6 +56,7 @@ export class OwnerRepository {
 			return ownerData;
 		}
 	}
+	
 	async editOwner(ownerData) {
 		const results = await Owners.findOne({
 			ownerTaxId: ownerData.ownerTaxId,

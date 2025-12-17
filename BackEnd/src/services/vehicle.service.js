@@ -15,6 +15,10 @@ export class VehicleService {
 		return await vehicleRepository.createVehicle(request);
 	}
 
+	async editVehicle(request) {
+		return await vehicleRepository.editVehicle(request);
+	}
+
 	async removeVehicle(request) {
 		//TODO: Implement remove vehicle logic
 	}
