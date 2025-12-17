@@ -15,6 +15,10 @@ export class OwnerService {
 		return await ownerRepository.createOwner(request);
 	}
 
+	async editOwner(request) {
+		return await ownerRepository.editOwner(request);
+	}
+
 	async removeOwner(id) {
 		return await ownerRepository.removeOwner(id);
 	}

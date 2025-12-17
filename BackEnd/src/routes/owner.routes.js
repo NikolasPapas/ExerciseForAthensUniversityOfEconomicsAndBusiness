@@ -35,7 +35,7 @@ router.get("/", authenticate, async (req, res, next) => {
 	}
 });
 
-router.post("/", authenticate,async (req, res, next) => {
+router.post("/", authenticate, async (req, res, next) => {
 	try {
 		const owner = await ownerService.createOwner(req.body);
 		res.status(201).json(owner);
@@ -44,30 +44,31 @@ router.post("/", authenticate,async (req, res, next) => {
 	}
 });
 
-router.get(
-	"/:id",
-	authenticate,
-	async (req, res, next) => {
-		try {
-			const owner = await ownerService.getOwnerById(req.params.id);
-			res.status(201).json(owner);
-		} catch (err) {
-			next(err);
-		}
+router.patch("/", authenticate, async (req, res, next) => {
+	try {
+		const owner = await ownerService.editOwner(req.body);
+		res.status(201).json(owner);
+	} catch (err) {
+		next(err);
 	}
-);
+});
 
-router.delete(
-	"/:id",
-	authenticate,
-	async (req, res, next) => {
-		try {
-			console.log("Deleting owner with id:", req.params.id);
-			res.status(201).json(await ownerService.removeOwner(req.params.id));
-		} catch (err) {
-			next(err);
-		}
+router.get("/:id", authenticate, async (req, res, next) => {
+	try {
+		const owner = await ownerService.getOwnerById(req.params.id);
+		res.status(201).json(owner);
+	} catch (err) {
+		next(err);
 	}
-);
+});
+
+router.delete("/:id", authenticate, async (req, res, next) => {
+	try {
+		console.log("Deleting owner with id:", req.params.id);
+		res.status(201).json(await ownerService.removeOwner(req.params.id));
+	} catch (err) {
+		next(err);
+	}
+});
 
 export default router;

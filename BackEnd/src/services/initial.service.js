@@ -12,6 +12,13 @@ export class InitialService {
 	async initDb() {
 		//Users
 		await userRepository.createUser({
+			name: "admin",
+			surname: "admin",
+			email: "admin@example.com",
+			username: "admin",
+			password: "admin"
+		});
+		await userRepository.createUser({
 			name: "Georgis",
 			surname: "Antonoglou",
 			email: "georgis.antonoglou@example.com",
@@ -31,6 +38,7 @@ export class InitialService {
 			ownerTaxId: "taxId001",
 			name: "Georgis",
 			surname: "Antonoglou",
+			email: "Georgis.a@example.com",
 			age: 30,
 			gender: "MALE",
 		});
@@ -38,6 +46,7 @@ export class InitialService {
 			ownerTaxId: "taxId002",
 			name: "Anna",
 			surname: "Antonoglou",
+			email: "Anna.a@example.com",
 			age: 30,
 			gender: "FEMALE",
 		});

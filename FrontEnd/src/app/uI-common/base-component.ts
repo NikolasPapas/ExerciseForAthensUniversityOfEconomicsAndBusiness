@@ -1,10 +1,12 @@
 
+import { OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 export abstract class BaseComponent {
 
-	public API_URL = localStorage.getItem('appBaseUrl');
-	public UI_URL = localStorage.getItem('uiBaseUrl');
+  public API_URL = localStorage.getItem('appBaseUrl');
+  public UI_URL = localStorage.getItem('uiBaseUrl');
+
 
   hasError(form: FormGroup, controlName: string, errorType?: string): boolean {
     const control = form.get(controlName);

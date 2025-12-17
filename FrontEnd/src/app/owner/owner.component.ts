@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { OwnerModel } from '../models/owner.model';
 import { BaseComponent } from '../uI-common/base-component';
 import { HttpClient } from '@angular/common/http';
-import { FormArray } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 
 @Component({
 	standalone: false,
@@ -19,16 +19,41 @@ export class OwnerComponent extends BaseComponent implements OnInit {
 		super();
 	}
 
-
 	ngOnInit() {
+		const authToken = localStorage.getItem("access_token");
+		if (!authToken) {
+			this.router.navigate(['/']);
+		}
+		this.loadOwners();
+	}
+
+	loadOwners() {
 		this.http.get(`${this.API_URL}/api/owner`, {}).subscribe((owners: any) => {
 			const ownerList = owners.map((owner) =>
-				new OwnerModel(owner.ownerTaxId, owner.name, owner.surname, owner.age, owner.gender).getFromModel()
-			);
+				new OwnerModel().init(owner.ownerTaxId, owner.name, owner.surname, owner.email, owner.age, owner.gender).getFromModel()
+			)
 			this.owners = new FormArray(ownerList);
 		});
 	}
 
+	editOwner(owner: FormGroup) {
+		owner.enable();
+	}
+	saveOwner(owner: FormGroup) {
+		this.http.patch(`${this.API_URL}/api/owner`, owner.getRawValue()).subscribe((owners: any) => {
+			owner.disable();
+			this.loadOwners();
+		});
+	}
 
+	addOwner() {
+		this.owners.controls.push(new OwnerModel().getFromModel());
+	}
+
+	deleteOwner(owner: FormGroup) {
+		this.http.delete(`${this.API_URL}/api/owner/${owner.get('ownerTaxId').value}`, {}).subscribe((owners: any) => {
+			this.loadOwners();
+		});
+	}
 
 }

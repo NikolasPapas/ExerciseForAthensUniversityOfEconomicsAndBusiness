@@ -10,6 +10,7 @@ export class OwnerRepository {
 			data.ownerTaxId,
 			data.name,
 			data.surname,
+			data.email,
 			data.age,
 			data.gender
 		);
@@ -20,6 +21,7 @@ export class OwnerRepository {
 		if (request.ownerTaxId) dbRequest.ownerTaxId = request.ownerTaxId;
 		if (request.name) dbRequest.name = request.name;
 		if (request.surname) dbRequest.surname = request.surname;
+		if (request.email) dbRequest.email = request.email;
 		if (request.age) dbRequest.age = request.age;
 		if (request.gender) dbRequest.gender = request.gender;
 		const data = await Owners.find(dbRequest);
@@ -29,6 +31,7 @@ export class OwnerRepository {
 					item.ownerTaxId,
 					item.name,
 					item.surname,
+					item.email,
 					item.age,
 					item.gender
 				)
@@ -44,8 +47,39 @@ export class OwnerRepository {
 				name: ownerData.name,
 				surname: ownerData.surname,
 				email: ownerData.email,
-				username: ownerData.username,
-				password: ownerData.password,
+				age: ownerData.age,
+				gender: ownerData.gender,
+				createDate: new Date(),
+				updateDate: new Date(),
+			});
+			return ownerData;
+		}
+	}
+	async editOwner(ownerData) {
+		const results = await Owners.findOne({
+			ownerTaxId: ownerData.ownerTaxId,
+		});
+		if (results) {
+			await Owners.updateOne(
+				{ ownerTaxId: ownerData.ownerTaxId },
+				{
+					name: ownerData.name,
+					surname: ownerData.surname,
+					email: ownerData.email,
+					age: ownerData.age,
+					gender: ownerData.gender,
+					updateDate: new Date(),
+				}
+			);
+			return ownerData;
+		}else{
+			await Owners.create({
+				ownerTaxId: ownerData.ownerTaxId,
+				name: ownerData.name,
+				surname: ownerData.surname,
+				email: ownerData.email,
+				age: ownerData.age,
+				gender: ownerData.gender,
 				createDate: new Date(),
 				updateDate: new Date(),
 			});

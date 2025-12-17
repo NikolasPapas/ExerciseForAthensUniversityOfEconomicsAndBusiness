@@ -30,6 +30,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
     console.log(data);
     this.http.post(`${this.API_URL}/api/auth`, { username: data.username, password: data.password }).subscribe((res: any) => {
       localStorage.setItem('access_token', res.token);
+      this.router.navigate(['/owner-page']);
     });
   }
 
