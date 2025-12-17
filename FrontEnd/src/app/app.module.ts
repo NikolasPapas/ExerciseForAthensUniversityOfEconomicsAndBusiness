@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { UiCommonModule } from './uI-common/ui-common.module';
 import { HomeComponent } from './home/home.component';
-import { OwnerComponent } from './owner/owner.component';
-import { VehicleComponent } from './vehicle/vehicle.component';
-import { InsuranceComponent } from './insurance/insurance.component';
+import { OwnerComponent } from './lists/owner/owner.component';
+import { VehicleComponent } from './lists/vehicle/vehicle.component';
+import { InsuranceComponent } from './lists/insurance/insurance.component';
+import { FullComponent } from './lists/full/full.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { InsuranceComponent } from './insurance/insurance.component';
     OwnerComponent,
     VehicleComponent,
     InsuranceComponent,
+    FullComponent,
   ],
   imports: [
     UiCommonModule,
@@ -23,6 +25,7 @@ import { InsuranceComponent } from './insurance/insurance.component';
       { path: 'owner-page', component: OwnerComponent },
       { path: 'vehicle-page', component: VehicleComponent },
       { path: 'insurance-page', component: InsuranceComponent },
+      { path: 'full-page', component: FullComponent },
     ])
   ],
   providers: [

@@ -47,6 +47,9 @@ export class HomeComponent extends BaseComponent implements OnInit {
     if (destination === "Insurances") {
       this.router.navigate(['/insurance-page']);
     }
+    if (destination === "Full") {
+      this.router.navigate(['/full-page']);
+    }
   }
 
 }

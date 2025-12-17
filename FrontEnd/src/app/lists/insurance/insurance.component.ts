@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InsuranceModel } from '../models/insurance.model';
-import { BaseComponent } from '../uI-common/base-component';
+import { InsuranceModel } from '../../models/insurance.model';
+import { BaseComponent } from '../../uI-common/base-component';
 import { HttpClient } from '@angular/common/http';
 import { FormArray, FormGroup } from '@angular/forms';
 
@@ -12,7 +12,7 @@ import { FormArray, FormGroup } from '@angular/forms';
 	styleUrls: ['./insurance.component.scss']
 })
 export class InsuranceComponent extends BaseComponent implements OnInit {
-	insurance: FormArray = null;
+	insurances: FormArray = null;
 
 
 	constructor(private router: Router, private http: HttpClient) {
@@ -32,7 +32,7 @@ export class InsuranceComponent extends BaseComponent implements OnInit {
 			const insuranceList = insurance.map((insurance) =>
 				new InsuranceModel().init(insurance.insuranceId, insurance.ownerTaxId, insurance.plateNumber, insurance.expiryDate, insurance.price).getFromModel()
 			)
-			this.insurance = new FormArray(insuranceList);
+			this.insurances = new FormArray(insuranceList);
 		});
 	}
 
@@ -47,7 +47,7 @@ export class InsuranceComponent extends BaseComponent implements OnInit {
 	}
 
 	addInsurance() {
-		this.insurance.controls.push(new InsuranceModel().getFromModel());
+		this.insurances.controls.push(new InsuranceModel().getFromModel());
 	}
 
 	deleteInsurance(insurance: FormGroup) {

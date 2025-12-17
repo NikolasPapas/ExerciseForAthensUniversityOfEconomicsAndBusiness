@@ -9,9 +9,9 @@
 			</mat-card-title>
 		</mat-card-header>
 		<mat-card-content class="row col-12 centered">
-			@if(insurance){ @for(vehicle of insurance.controls; track
-			vehicle.get('plateNumber').value){
-			<section class="row col-12 centered" [formGroup]="$any(vehicle)">
+			@if(insurances){ @for(insurance of insurances.controls; track
+			insurance.get('insuranceId').value){
+			<section class="row col-12 centered" [formGroup]="$any(insurance)">
 				<mat-form-field class="col-auto">
 					<input
 						matInput
@@ -53,16 +53,16 @@
 					/>
 				</mat-form-field>
 				<div class="col-auto">
-					@if(vehicle.disabled){
-					<button matButton (click)="editInsurance($any(vehicle))">
+					@if(insurance.disabled){
+					<button matButton (click)="editInsurance($any(insurance))">
 						<mat-icon>edit</mat-icon>
 					</button>
-					} @if(!vehicle.disabled){
-					<button matButton (click)="saveInsurance($any(vehicle))">
+					} @if(!insurance.disabled){
+					<button matButton (click)="saveInsurance($any(insurance))">
 						<mat-icon>save</mat-icon>
 					</button>
 					}
-					<button matButton (click)="deleteInsurance($any(vehicle))">
+					<button matButton (click)="deleteInsurance($any(insurance))">
 						<mat-icon>delete</mat-icon>
 					</button>
 				</div>

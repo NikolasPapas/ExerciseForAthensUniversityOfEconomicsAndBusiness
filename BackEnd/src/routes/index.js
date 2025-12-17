@@ -4,6 +4,7 @@ import authRouter from './auth.routes.js';
 import ownerRouter from './owner.routes.js';
 import insuranceRouter from './insurance.routes.js';
 import vehicleRouter from './vehicle.routes.js';
+import fullRouter from './full.routes.js';
 
 import { InitialService } from "./../services/initial.service.js";
 
@@ -15,6 +16,7 @@ router.use('/auth', authRouter);
 router.use('/owner', ownerRouter);
 router.use('/insurance', insuranceRouter);
 router.use('/vehicle', vehicleRouter);
+router.use('/full', fullRouter);
 
 router.get("/initialDb", async (req, res, next) => {
 	try {

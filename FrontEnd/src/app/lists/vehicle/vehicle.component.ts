@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { VehicleModel } from '../models/vehicle.model';
-import { BaseComponent } from '../uI-common/base-component';
+import { VehicleModel } from '../../models/vehicle.model';
+import { BaseComponent } from '../../uI-common/base-component';
 import { HttpClient } from '@angular/common/http';
 import { FormArray, FormGroup } from '@angular/forms';
 
