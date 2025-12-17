@@ -44,6 +44,15 @@ router.post("/", authenticate, async (req, res, next) => {
 	}
 });
 
+router.patch("/", authenticate, async (req, res, next) => {
+	try {
+		const insurance = await insuranceService.editInsurance(req.body);
+		res.status(201).json(insurance);
+	} catch (err) {
+		next(err);
+	}
+});
+
 router.get(
 	"/:id",
 	authenticate,

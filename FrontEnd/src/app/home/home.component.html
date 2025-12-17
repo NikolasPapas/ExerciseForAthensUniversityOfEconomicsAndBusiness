@@ -6,6 +6,7 @@
 		<mat-card-subtitle> Mechanic Shop </mat-card-subtitle>
 	</mat-card-header>
 	<mat-card-content class="col-12 row card-content container centered">
+		@if(needLogin){
 		<form class="row col-12 centered" [formGroup]="loginCredentials">
 			<mat-form-field class="col-auto">
 				<input
@@ -23,7 +24,14 @@
 					formControlName="password"
 				/>
 			</mat-form-field>
-			<button matButton (click)="login(loginCredentials.getRawValue())">Login</button>
+			<button matButton (click)="login(loginCredentials.getRawValue())">
+				Login
+			</button>
 		</form>
+		} @if(!needLogin){
+		<button matButton (click)="navigate('Owners')">Page Owners</button>
+		<button matButton (click)="navigate('Vehicles')">Page Vehicles</button>
+		<button matButton (click)="navigate('Insurances')">Page Insurances</button>
+		}
 	</mat-card-content>
 </mat-card>

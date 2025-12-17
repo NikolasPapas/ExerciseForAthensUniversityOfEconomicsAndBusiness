@@ -1,0 +1,73 @@
+<div>
+	<mat-card class="row col-12 centered">
+		<mat-card-header class="col-12 card-header centered">
+			<mat-card-title>
+				Insurance
+				<button matButton (click)="addInsurance()">
+					ADD <mat-icon>add</mat-icon>
+				</button>
+			</mat-card-title>
+		</mat-card-header>
+		<mat-card-content class="row col-12 centered">
+			@if(insurance){ @for(vehicle of insurance.controls; track
+			vehicle.get('plateNumber').value){
+			<section class="row col-12 centered" [formGroup]="$any(vehicle)">
+				<mat-form-field class="col-auto">
+					<input
+						matInput
+						type="text"
+						placeholder="insuranceId"
+						formControlName="insuranceId"
+					/>
+				</mat-form-field>
+				<mat-form-field class="col-auto">
+					<input
+						matInput
+						type="text"
+						placeholder="ownerTaxId"
+						formControlName="ownerTaxId"
+					/>
+				</mat-form-field>
+				<mat-form-field class="col-auto">
+					<input
+						matInput
+						type="text"
+						placeholder="plateNumber"
+						formControlName="plateNumber"
+					/>
+				</mat-form-field>
+				<mat-form-field class="col-auto">
+					<input
+						matInput
+						type="date"
+						placeholder="expiryDate"
+						formControlName="expiryDate"
+					/>
+				</mat-form-field>
+				<mat-form-field class="col-auto">
+					<input
+						matInput
+						type="number"
+						placeholder="price"
+						formControlName="price"
+					/>
+				</mat-form-field>
+				<div class="col-auto">
+					@if(vehicle.disabled){
+					<button matButton (click)="editInsurance($any(vehicle))">
+						<mat-icon>edit</mat-icon>
+					</button>
+					} @if(!vehicle.disabled){
+					<button matButton (click)="saveInsurance($any(vehicle))">
+						<mat-icon>save</mat-icon>
+					</button>
+					}
+					<button matButton (click)="deleteInsurance($any(vehicle))">
+						<mat-icon>delete</mat-icon>
+					</button>
+				</div>
+			</section>
+			}}
+		</mat-card-content>
+	</mat-card>
+</div>

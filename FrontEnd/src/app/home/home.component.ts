@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent extends BaseComponent implements OnInit {
   loginCredentials: FormGroup = null;
+  needLogin: boolean = false;
 
   constructor(private router: Router, private http: HttpClient) {
     super();
@@ -20,6 +21,8 @@ export class HomeComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const authToken = localStorage.getItem("access_token");
+    this.needLogin = !authToken;
     this.loginCredentials = new FormGroup({
       username: new FormControl("", [Validators.required]),
       password: new FormControl("", [Validators.required]),
@@ -30,9 +33,20 @@ export class HomeComponent extends BaseComponent implements OnInit {
     console.log(data);
     this.http.post(`${this.API_URL}/api/auth`, { username: data.username, password: data.password }).subscribe((res: any) => {
       localStorage.setItem('access_token', res.token);
-      this.router.navigate(['/owner-page']);
+      this.needLogin = false;
     });
   }
 
+  navigate(destination) {
+    if (destination === "Owners") {
+      this.router.navigate(['/owner-page']);
+    }
+    if (destination === "Vehicles") {
+      this.router.navigate(['/vehicle-page']);
+    }
+    if (destination === "Insurances") {
+      this.router.navigate(['/insurance-page']);
+    }
+  }
 
 }

@@ -76,6 +76,36 @@ export class InsuranceRepository {
 		}
 	}
 
+	async editInsurance(insuranceData) {
+		const results = await Insurances.findOne({
+			insuranceId: insuranceData.insuranceId,
+		});
+		if (results) {
+			await Insurances.updateOne(
+				{ insuranceId: insuranceData.insuranceId },
+				{
+					ownerTaxId: insuranceData.ownerTaxId,
+					plateNumber: insuranceData.plateNumber,
+					expiryDate: insuranceData.expiryDate,
+					price: insuranceData.price,
+					updateDate: new Date(),
+				}
+			);
+			return insuranceData;
+		} else {
+			await Insurances.create({
+				insuranceId: insuranceData.insuranceId,
+				ownerTaxId: insuranceData.ownerTaxId,
+				plateNumber: insuranceData.plateNumber,
+				expiryDate: insuranceData.expiryDate,
+				price: insuranceData.price,
+				createDate: new Date(),
+				updateDate: new Date(),
+			});
+			return insuranceData;
+		}
+	}
+
 	async removeInsurance(id) {
 		const results = await Insurances.findOne({
 			insuranceId: id,

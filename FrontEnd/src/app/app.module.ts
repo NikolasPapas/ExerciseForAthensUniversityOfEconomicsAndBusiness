@@ -6,6 +6,7 @@ import { UiCommonModule } from './uI-common/ui-common.module';
 import { HomeComponent } from './home/home.component';
 import { OwnerComponent } from './owner/owner.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
+import { InsuranceComponent } from './insurance/insurance.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { VehicleComponent } from './vehicle/vehicle.component';
     HomeComponent,
     OwnerComponent,
     VehicleComponent,
+    InsuranceComponent,
   ],
   imports: [
     UiCommonModule,
@@ -20,6 +22,7 @@ import { VehicleComponent } from './vehicle/vehicle.component';
       { path: '', component: HomeComponent },
       { path: 'owner-page', component: OwnerComponent },
       { path: 'vehicle-page', component: VehicleComponent },
+      { path: 'insurance-page', component: InsuranceComponent },
     ])
   ],
   providers: [
