@@ -33,6 +33,11 @@ export class VehicleComponent extends BaseComponent implements OnInit {
 				new VehicleModel().init(vehicle.plateNumber, vehicle.insuranceDate, vehicle.ownerTaxId, vehicle.brand, vehicle.model, vehicle.color).getFromModel()
 			)
 			this.vehicles = new FormArray(vehicleList);
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 
@@ -43,6 +48,11 @@ export class VehicleComponent extends BaseComponent implements OnInit {
 		this.http.patch(`${this.API_URL}/api/vehicle`, vehicle.getRawValue()).subscribe((vehicles: any) => {
 			vehicle.disable();
 			this.loadVehicles();
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 
@@ -53,6 +63,11 @@ export class VehicleComponent extends BaseComponent implements OnInit {
 	deleteVehicle(vehicle: FormGroup) {
 		this.http.delete(`${this.API_URL}/api/vehicle/${vehicle.get('vehicleTaxId').value}`, {}).subscribe((vehicles: any) => {
 			this.loadVehicles();
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 

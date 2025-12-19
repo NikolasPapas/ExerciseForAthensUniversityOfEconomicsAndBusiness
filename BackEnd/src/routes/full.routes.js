@@ -28,7 +28,8 @@ export const authenticate = (req, res, next) => {
 
 router.get("/", authenticate, async (req, res, next) => {
 	try {
-		const data = await fullService.getAll();
+		console.log("Max Results:", req.query.maxResults);
+		const data = await fullService.getAll(req.query.maxResults);
 		res.status(201).json(data);
 	} catch (err) {
 		next(err);

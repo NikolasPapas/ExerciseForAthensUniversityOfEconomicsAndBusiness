@@ -33,6 +33,11 @@ export class OwnerComponent extends BaseComponent implements OnInit {
 				new OwnerModel().init(owner.ownerTaxId, owner.name, owner.surname, owner.email, owner.age, owner.gender).getFromModel()
 			)
 			this.owners = new FormArray(ownerList);
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 
@@ -43,6 +48,11 @@ export class OwnerComponent extends BaseComponent implements OnInit {
 		this.http.patch(`${this.API_URL}/api/owner`, owner.getRawValue()).subscribe((owners: any) => {
 			owner.disable();
 			this.loadOwners();
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 
@@ -53,6 +63,11 @@ export class OwnerComponent extends BaseComponent implements OnInit {
 	deleteOwner(owner: FormGroup) {
 		this.http.delete(`${this.API_URL}/api/owner/${owner.get('ownerTaxId').value}`, {}).subscribe((owners: any) => {
 			this.loadOwners();
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 

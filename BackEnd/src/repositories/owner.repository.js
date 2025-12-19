@@ -16,7 +16,7 @@ export class OwnerRepository {
 		);
 	}
 
-	async getOwner(request) {
+	async getOwner(request,maxResults=1) {
 		const dbRequest = {};
 		if (request.ownerTaxId) dbRequest.ownerTaxId = request.ownerTaxId;
 		if (request.name) dbRequest.name = request.name;
@@ -24,7 +24,7 @@ export class OwnerRepository {
 		if (request.email) dbRequest.email = request.email;
 		if (request.age) dbRequest.age = request.age;
 		if (request.gender) dbRequest.gender = request.gender;
-		const data = await Owners.find(dbRequest);
+		const data = await Owners.find(dbRequest).limit(maxResults);
 		return data.map(
 			(item) =>
 				new OwnerModel(

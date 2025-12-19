@@ -33,6 +33,11 @@ export class InsuranceComponent extends BaseComponent implements OnInit {
 				new InsuranceModel().init(insurance.insuranceId, insurance.ownerTaxId, insurance.plateNumber, insurance.expiryDate, insurance.price).getFromModel()
 			)
 			this.insurances = new FormArray(insuranceList);
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 
@@ -43,6 +48,11 @@ export class InsuranceComponent extends BaseComponent implements OnInit {
 		this.http.patch(`${this.API_URL}/api/insurance`, insurance.getRawValue()).subscribe((insurances: any) => {
 			insurance.disable();
 			this.loadInsurance();
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 
@@ -53,6 +63,11 @@ export class InsuranceComponent extends BaseComponent implements OnInit {
 	deleteInsurance(insurance: FormGroup) {
 		this.http.delete(`${this.API_URL}/api/insurance/${insurance.get('insuranceTaxId').value}`, {}).subscribe((insurance: any) => {
 			this.loadInsurance();
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 

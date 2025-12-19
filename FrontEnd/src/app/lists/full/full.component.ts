@@ -13,7 +13,7 @@ import { FormArray, FormGroup } from '@angular/forms';
 })
 export class FullComponent extends BaseComponent implements OnInit {
 	owners: FormArray = null;
-
+	public maxResults = 1;
 
 	constructor(private router: Router, private http: HttpClient) {
 		super();
@@ -28,11 +28,16 @@ export class FullComponent extends BaseComponent implements OnInit {
 	}
 
 	loadData() {
-		this.http.get(`${this.API_URL}/api/full`, {}).subscribe((data: any) => {
+		this.http.get(`${this.API_URL}/api/full`, { params: { maxResults: this.maxResults },}).subscribe((data: any) => {
 			const ownerList = data.map((item) =>
 				new OwnerVehicleModel().init(item.owner.ownerTaxId, item.owner.name, item.owner.surname, item.owner.email, item.owner.age, item.owner.gender, item.vehicles).getFromModel()
 			)
 			this.owners = new FormArray(ownerList);
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 
@@ -43,6 +48,11 @@ export class FullComponent extends BaseComponent implements OnInit {
 		this.http.patch(`${this.API_URL}/api/full`, data.getRawValue()).subscribe((owners: any) => {
 			data.disable();
 			this.loadData();
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 
@@ -53,6 +63,11 @@ export class FullComponent extends BaseComponent implements OnInit {
 	delete(owner: FormGroup) {
 		this.http.delete(`${this.API_URL}/api/full/${owner.get('ownerTaxId').value}`, {}).subscribe((owners: any) => {
 			this.loadData();
+		}, (err) => {
+			if (err === 'Unauthorized' || err.status === 401) {
+				localStorage.removeItem('access_token');
+				this.router.navigateByUrl('/');
+			}
 		});
 	}
 
