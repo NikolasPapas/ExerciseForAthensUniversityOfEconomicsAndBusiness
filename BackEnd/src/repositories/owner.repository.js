@@ -94,7 +94,6 @@ export class OwnerRepository {
 			ownerTaxId: id,
 		});
 		if (results) {
-			console.log("Remove owner results:", results);
 			await Owners.deleteOne({ ownerTaxId: id });
 			return true;
 		}

@@ -1,14 +1,18 @@
 <div>
 	<mat-card class="row col-12 card centered">
 		<mat-card-header class="col-12 card-header centered">
-			<mat-card-title class="card-title centered">Owners:
-				<input class="col-auto"
+			<mat-card-title class="card-title centered"
+				>Owners:
+				<input
+					class="col-auto"
 					matInput
 					type="number"
 					matTooltip="Max Results"
 					[(ngModel)]="maxResults"
 				/>
-				<button matButton (click)="loadData()"><mat-icon>search</mat-icon></button>
+				<button matButton (click)="loadData()">
+					<mat-icon>search</mat-icon>
+				</button>
 			</mat-card-title>
 			<!-- <mat-card-title>
 				<button matButton (click)="add()">ADD <mat-icon>add</mat-icon></button>
@@ -87,12 +91,18 @@
 									/>
 								</mat-form-field>
 								<mat-form-field class="col-auto">
+									<mat-label>Insurance Date</mat-label>
 									<input
 										matInput
-										type="date"
-										placeholder="insuranceDate"
+										[matDatepicker]="dp1"
 										formControlName="insuranceDate"
 									/>
+									<mat-hint>MM/DD/YYYY</mat-hint>
+									<mat-datepicker-toggle
+										matIconSuffix
+										[for]="dp1"
+									></mat-datepicker-toggle>
+									<mat-datepicker touchUi #dp1></mat-datepicker>
 								</mat-form-field>
 								<mat-form-field class="col-auto">
 									<input
@@ -160,12 +170,18 @@
 										/>
 									</mat-form-field>
 									<mat-form-field class="col-auto">
+										<mat-label>Expiry Date</mat-label>
 										<input
 											matInput
-											type="date"
-											placeholder="expiryDate"
+											[matDatepicker]="dp1"
 											formControlName="expiryDate"
 										/>
+										<mat-hint>MM/DD/YYYY</mat-hint>
+										<mat-datepicker-toggle
+											matIconSuffix
+											[for]="dp1"
+										></mat-datepicker-toggle>
+										<mat-datepicker touchUi #dp1></mat-datepicker>
 									</mat-form-field>
 									<mat-form-field class="col-auto">
 										<input

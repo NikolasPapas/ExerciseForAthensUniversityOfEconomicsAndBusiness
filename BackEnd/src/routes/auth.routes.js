@@ -16,7 +16,6 @@ const userService = new UserService();
 
 router.post("/", async (req, res, next) => {
 	try {
-		console.log(req.body);
 		const user = await userService.getUser(req.body.username);
 		if (!user) return res.status(401).json({ message: "Invalid credentials" });
 		//TODO: FIX PASSWORD CHECKING

@@ -30,7 +30,6 @@ export class HomeComponent extends BaseComponent implements OnInit {
   }
 
   login(data: any) {
-    console.log(data);
     this.http.post(`${this.API_URL}/api/auth`, { username: data.username, password: data.password }).subscribe((res: any) => {
       localStorage.setItem('access_token', res.token);
       this.needLogin = false;
@@ -49,6 +48,9 @@ export class HomeComponent extends BaseComponent implements OnInit {
     }
     if (destination === "Full") {
       this.router.navigate(['/full-page']);
+    }
+    if (destination === "repair") {
+      this.router.navigate(['/repair-page']);
     }
   }
 

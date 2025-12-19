@@ -2,11 +2,13 @@ import { UserRepository } from "./../repositories/user.repository.js";
 import { OwnerRepository } from "./../repositories/owner.repository.js";
 import { VehicleRepository } from "./../repositories/vehicle.repository.js";
 import { InsuranceRepository } from "./../repositories/insurance.repository.js";
+import { RepairRepository } from "./../repositories/repair.repository.js";
 
 const userRepository = new UserRepository();
 const ownerRepository = new OwnerRepository();
 const vehicleRepository = new VehicleRepository();
 const insuranceRepository = new InsuranceRepository();
+const repairRepository = new RepairRepository();
 
 export class InitialService {
 	async initDb() {
@@ -16,7 +18,7 @@ export class InitialService {
 			surname: "admin",
 			email: "admin@example.com",
 			username: "admin",
-			password: "admin"
+			password: "admin",
 		});
 		await userRepository.createUser({
 			name: "Georgis",
@@ -84,12 +86,61 @@ export class InitialService {
 			expiryDate: new Date().addDays(60),
 			price: 100,
 		});
+
+		// Reapirs
+		await repairRepository.createRepair({
+			repairId: "repair001",
+			plateNumber: "plate001",
+			startDate: new Date().addDays(-60),
+			endDate: new Date().addDays(-1),
+			statuses: [
+				{
+					repairId: "repair001",
+					repairStatusId: "repairStatus0011",
+					startDate: new Date().addDays(-60),
+					endDate: new Date().addDays(-30),
+					mechanicName: "Mike",
+					comments: "Initial inspection completed.",
+				},
+				{
+					repairId: "repair001",
+					repairStatusId: "repairStatus0012",
+					startDate: new Date().addDays(-29),
+					endDate: new Date().addDays(-1),
+					mechanicName: "Steve",
+					comments: "Repairs finished, vehicle ready for pickup.",
+				},
+			],
+		});
+		await repairRepository.createRepair({
+			repairId: "repair002",
+			plateNumber: "plate002",
+			startDate: new Date().addDays(-30),
+			endDate: null,
+			statuses: [
+				{
+					repairId: "repair002",
+					repairStatusId: "repairStatus0021",
+					startDate: new Date().addDays(-30),
+					endDate: new Date().addDays(-5),
+					mechanicName: "Mike",
+					comments: "Initial inspection completed.",
+				},
+				{
+					repairId: "repair002",
+					repairStatusId: "repairStatus0022",
+					startDate: new Date().addDays(-5),
+					mechanicName: "Steve",
+					comments: "Repairs finished, vehicle ready for pickup.",
+				},
+			],
+		});
 		return true;
 	}
 }
 
-Date.prototype.addDays = function(days) {
-    var date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-}
+Date.prototype.addDays = function (days) {
+	var date = new Date(this.valueOf());
+	date.setDate(date.getDate() + days);
+	return date;
+};

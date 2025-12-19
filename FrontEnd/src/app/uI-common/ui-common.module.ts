@@ -36,6 +36,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { TokenInterceptor } from '../serivices/interceptors/token-interceptor';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,8 @@ import { TokenInterceptor } from '../serivices/interceptors/token-interceptor';
     ReactiveFormsModule,
     MatTableModule,
     MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
@@ -113,7 +117,9 @@ import { TokenInterceptor } from '../serivices/interceptors/token-interceptor';
     MatStepperModule,
     ReactiveFormsModule,
     MatTableModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 }) export class UiCommonModule { }
 

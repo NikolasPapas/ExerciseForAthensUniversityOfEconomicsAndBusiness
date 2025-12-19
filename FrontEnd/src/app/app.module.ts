@@ -8,6 +8,7 @@ import { OwnerComponent } from './lists/owner/owner.component';
 import { VehicleComponent } from './lists/vehicle/vehicle.component';
 import { InsuranceComponent } from './lists/insurance/insurance.component';
 import { FullComponent } from './lists/full/full.component';
+import { RepairComponent } from './lists/repair/repair.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { FullComponent } from './lists/full/full.component';
     VehicleComponent,
     InsuranceComponent,
     FullComponent,
+    RepairComponent,
   ],
   imports: [
     UiCommonModule,
@@ -26,6 +28,7 @@ import { FullComponent } from './lists/full/full.component';
       { path: 'vehicle-page', component: VehicleComponent },
       { path: 'insurance-page', component: InsuranceComponent },
       { path: 'full-page', component: FullComponent },
+      { path: 'repair-page', component: RepairComponent },
     ])
   ],
   providers: [

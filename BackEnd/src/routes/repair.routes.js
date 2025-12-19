@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { FullService } from "../services/full.service.js";
+import { RepairService } from "../services/repair.service.js";
 
 dotenv.config();
 
@@ -10,7 +10,7 @@ const JWT_SECRET =
 
 const router = express.Router();
 
-const fullService = new FullService();
+const repairService = new RepairService();
 
 export const authenticate = (req, res, next) => {
 	const header = req.headers.authorization;
@@ -28,8 +28,8 @@ export const authenticate = (req, res, next) => {
 
 router.get("/", authenticate, async (req, res, next) => {
 	try {
-		const data = await fullService.getAll(req.query.maxResults);
-		res.status(201).json(data);
+		const repairs = await repairService.getRepairs(req.body);
+		res.status(201).json(repairs);
 	} catch (err) {
 		next(err);
 	}
@@ -37,8 +37,8 @@ router.get("/", authenticate, async (req, res, next) => {
 
 router.post("/", authenticate, async (req, res, next) => {
 	try {
-		const data = await fullService.create(req.body);
-		res.status(201).json(data);
+		const repair = await repairService.createRepair(req.body);
+		res.status(201).json(repair);
 	} catch (err) {
 		next(err);
 	}
@@ -46,29 +46,24 @@ router.post("/", authenticate, async (req, res, next) => {
 
 router.patch("/", authenticate, async (req, res, next) => {
 	try {
-		const data = await fullService.edit(req.body);
-		res.status(201).json(data);
+		const repair = await repairService.editRepair(req.body);
+		res.status(201).json(repair);
 	} catch (err) {
 		next(err);
 	}
 });
 
-router.get("/:id", authenticate, async (req, res, next) => {
-	try {
-		const data = await fullService.getByOwnerId(req.params.id);
-		res.status(201).json(data);
-	} catch (err) {
-		next(err);
+router.delete(
+	"/:id",
+	authenticate,
+	async (req, res, next) => {
+		try {
+			await repairService.removeRepair(req.params.id);
+			res.status(201).json(true);
+		} catch (err) {
+			next(err);
+		}
 	}
-});
-
-router.delete("/:id", authenticate, async (req, res, next) => {
-	try {
-		console.log("Deleting full with id:", req.params.id);
-		res.status(201).json(await fullService.remove(req.params.id));
-	} catch (err) {
-		next(err);
-	}
-});
+);
 
 export default router;
