@@ -2,7 +2,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 export class VehicleModel {
 	plateNumber: String;
-	insuranceDate: String;
+	insuranceDate: Date;
 	ownerTaxId: String;
 	brand: String;
 	model: String;

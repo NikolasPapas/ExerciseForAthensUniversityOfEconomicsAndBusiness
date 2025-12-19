@@ -3,7 +3,7 @@ import { InsuranceModel } from "./insurance.model";
 
 export class VehicleInsuranceModel {
 	plateNumber: String;
-	insuranceDate: String;
+	insuranceDate: Date;
 	ownerTaxId: String;
 	brand: String;
 	model: String;
