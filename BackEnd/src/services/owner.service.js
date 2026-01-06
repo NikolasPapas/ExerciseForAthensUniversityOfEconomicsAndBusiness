@@ -3,8 +3,8 @@ import { OwnerRepository } from "./../repositories/owner.repository.js";
 const ownerRepository = new OwnerRepository();
 
 export class OwnerService {
-	async getOwners(request) {
-		return await ownerRepository.getOwner(request);
+	async getOwners(request,maxResults=1) {
+		return await ownerRepository.getOwner(request,maxResults);
 	}
 
 	async getOwnerById(id) {

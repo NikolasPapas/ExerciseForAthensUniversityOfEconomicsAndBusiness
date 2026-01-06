@@ -66,14 +66,5 @@ services:
       - backend
 
 
-  # db-importer:
-  #   build: ./DB/importer
-  #   container_name: db-importer
-  #   depends_on:
-  #     - mongodb
-  #   environment:
-  #     MONGO_URI: mongodb://admin:admin123@mongodb:27017/applicationDB?authSource=admin
-  #   restart: "no"
-
 volumes:
   mongo_data:

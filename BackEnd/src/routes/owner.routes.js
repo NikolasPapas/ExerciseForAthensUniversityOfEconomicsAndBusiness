@@ -28,7 +28,7 @@ export const authenticate = (req, res, next) => {
 
 router.get("/", authenticate, async (req, res, next) => {
 	try {
-		const owners = await ownerService.getOwners(req.body);
+		const owners = await ownerService.getOwners(req.body,req.params.maxResults);
 		res.status(201).json(owners);
 	} catch (err) {
 		next(err);
